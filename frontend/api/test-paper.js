@@ -8,4 +8,17 @@ function fetchQuestions() {
     });
 }
 
-export default fetchQuestions;
+function submitQuestions(data) {
+    return request({
+        url: 'submit',
+        method: 'post',
+        data
+    }).then(data => {
+        return data;
+    });
+}
+
+export default {
+    fetchQuestions,
+    submitQuestions
+};

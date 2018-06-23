@@ -12,12 +12,17 @@ class Login extends Component {
 		super(props);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
+	
+	_saveUserId(userId) {
+		localStorage.setItem('userId', userId);
+	}
 
 	handleSubmit(e) {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 		  if (!err) {
 				console.log('Received values of form: ', values);
+				this._saveUserId(values.userId);
 				if (values.userId === '0000') {
 					browserHistory.push('/result')
 				} else {

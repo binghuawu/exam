@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Layout, Radio, Button } from 'antd';
+import { browserHistory } from 'react-router';
 import '../static/css/test-paper.scss';
-import fetchQuestions from '../../api/test-paper';
+import testPaperApi from '../../api/test-paper';
 
 const { Header, Content } = Layout;
 const RadioGroup = Radio.Group;
@@ -17,14 +18,19 @@ class TestPaper extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.onReset = this.onReset.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
-    fetchQuestions().then(data => {
+    testPaperApi.fetchQuestions().then(data => {
       const choices = data.choices;
       const title = data.title;
       this.setState({ choices, title });
     });
+  }
+
+  _getUserId() {
+    return localStorage.getItem('userId');
   }
 
   onChange(e, index) {
@@ -37,6 +43,25 @@ class TestPaper extends Component {
 
   onReset() {
     this.setState({ selected: [] });
+  }
+
+  onSubmit() {
+    const userId = this._getUserId();
+    const selected = this.state.selected;
+    const choices = selected.map(select => {
+      const id = select.split('-')[0];
+      const answer = select.split('-')[1];
+      return {
+        id, 
+        answer
+      };
+    });
+    testPaperApi.submitQuestions({
+      userId,
+      choices
+    }).then(data => {
+      browserHistory.push('/score/' + data.score);
+    });
   }
 
   render() {
@@ -74,7 +99,7 @@ class TestPaper extends Component {
           </ul>
           <div className="test-paper-submit-button">
             <Button onClick={ this.onReset }>重置</Button>
-            <Button type="primary">提交</Button>
+            <Button type="primary" onClick={ this.onSubmit }>提交</Button>
           </div>
         </Content>
       </Layout>
