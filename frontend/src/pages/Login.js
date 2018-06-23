@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { Layout, Form, Icon, Input, Button, Checkbox } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import '../static/css/main.scss';
@@ -12,7 +12,7 @@ class Login extends Component {
 		super(props);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
-	
+
 	_saveUserId(userId) {
 		localStorage.setItem('userId', userId);
 	}
@@ -59,8 +59,6 @@ class Login extends Component {
 							</Button>
 							</FormItem>
 						</Form>	
-						<Link to="/test-paper">testPaper</Link>
-						<Link to="/score">score</Link>
 					</Content>
 				</Layout>
 			);	
