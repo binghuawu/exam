@@ -57,6 +57,8 @@ class Login extends Component {
 							Or <a href="">register now!</a>
 							</FormItem>
 						</Form>	
+						<Link to="/test-paper">testPaper</Link>
+						<Link to="/score">score</Link>
 					</Content>
 				</Layout>
 			);	
