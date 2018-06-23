@@ -16,18 +16,23 @@
     }
     &-footer {
         width: 100%;
-        display: flex;
+        // display: flex;
         text-align: center;
         border-left: 1px solid #ebedf0;
         border-right: 1px solid #ebedf0;
         &-label {
-            flex: 1;
+            // flex: 1;
             border-right: 1px solid #ebedf0;
             padding: 10px 0;
         }
         &-total {
-            flex: 3;
-            padding: 10px 0;
+            // flex: 3;
+            // padding: 10px 0;
+            height: 300px;
+            line-height: 300px;
+            text-align: center;
+            font-size: 90px;
+            font-weight: 900;
         }
     }
 }
