@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,10 +27,8 @@ public class UserController {
         put("10", "D");
     }};
 
-    private static Map<String, BigDecimal> userScores = new HashMap<String, BigDecimal>() {{
-        put("0001", new BigDecimal(100));
-    }};
-
+    
+    private static List<UserScore> userScoreList = new ArrayList<>();
 
     @PostMapping(value = "api/submit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserScore submit(@RequestBody UserSubmitAnswer userSubmitAnswer) {
@@ -41,13 +40,18 @@ public class UserController {
 
     @GetMapping(value = "api/queryAll", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserScore> queryAll() {
-        return Lists.newArrayList();
+        return userScoreList;
     }
 
     @GetMapping(value = "api/query/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserScore queryAll(@PathVariable String id) {
-        UserScore userScore = new UserScore();
-        userScore.setUserId(id);
-        return userScore;
+    public UserScore query(@PathVariable String id) {
+        UserScore userScore;
+        for (int i = 0; i < userScoreList.size(); i++) {
+            userScore = userScoreList.get(i);
+            if (userScore != null && userScore.getUserId().equals(id)) {
+                return userScore;
+            }
+        }
+        return null;
     }
 }
