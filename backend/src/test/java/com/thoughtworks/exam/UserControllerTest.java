@@ -16,13 +16,25 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserScoreControllerTest {
+public class UserControllerTest {
     @Autowired
     private MockMvc mvc;
+
+    @Test
+    public void should_return_user_score_when_submit_answer_by_user() throws Exception {
+        UserSubmitAnswer userSubmitAnswer = new UserSubmitAnswer();
+        userSubmitAnswer.setUserId("0001");
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        mvc.perform(post("/api/submit").contentType(APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(userSubmitAnswer)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("userId", CoreMatchers.is("0001")));
+    }
 
     @Test
     public void should_return_all_user_score() throws Exception {
@@ -39,5 +51,4 @@ public class UserScoreControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("userId", CoreMatchers.is("00001")));
     }
-
 }
