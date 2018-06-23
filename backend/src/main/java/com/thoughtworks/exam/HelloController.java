@@ -1,4 +1,4 @@
-package hello;
+package com.thoughtworks.exam;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
