@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Layout, Form, Icon, Input, Button, Checkbox, Table } from 'antd';
+import { Layout, Input, Button, Table } from 'antd';
 
 import '../static/css/result.scss';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 
 const columns = [
   {
@@ -23,18 +23,7 @@ class Result extends Component {
     super(props);
     this.state = {
       userId: null,
-      dataSource:[
-        {
-          key: '1',
-          userId: '0001',
-          score: 98
-        }, 
-        {
-          key: '2',
-          userId: '0002',
-          score: 86,
-        }
-      ]
+      dataSource:[]
     }
 
     this._handleUserIdChange = this._handleUserIdChange.bind(this);
@@ -42,10 +31,14 @@ class Result extends Component {
   }
 
   componentDidMount() {
-    fetch('http://rap2api.taobao.org/app/mock/17913/api/queryAll')
+    fetch('http://1bf8acfd.ngrok.io/api/queryAll')
     .then((response)=>response.json())
-    .then((data)=>{
-      this.setState({dataSource: data.scores.map((score)=>Object.assign(score,{key:score.userId}))});
+      .then((scores) => {
+      this.setState({dataSource: scores.map((score)=>Object.assign(score,{key:score.userId}))});
+    }).catch((err) => {
+      console.error(err);
+      console.log(err.response);
+      console.log(err.message);
     })
   }
 
@@ -75,10 +68,14 @@ class Result extends Component {
   }
 
   _handleQuery(){
-    fetch('http://rap2api.taobao.org/app/mock/17913/api/query')
+    fetch('http://1bf8acfd.ngrok.io/api/query/' + this.state.userId)
     .then((response)=>response.json())
-    .then((score)=>{
+    .then((score) => {
       this.setState({dataSource: [Object.assign(score,{key:score.userId})]});
+      }).catch((err) => {
+      console.error(err);
+      console.log(err.response);
+      console.log(err.message);
     })
   }
 }
