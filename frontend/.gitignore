@@ -1,0 +1,9 @@
+node_modules/
+build/**
+build/
+*.log
+.vscode/
+.idea/**
+.idea/
+npm-debug.log*
+v8-compile-cache*/**
