@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { Layout, Form, Icon, Input, Button, Checkbox } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import '../static/css/main.scss';
@@ -17,7 +17,12 @@ class Login extends Component {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 		  if (!err) {
-			console.log('Received values of form: ', values);
+				console.log('Received values of form: ', values);
+				if (values.userId === '0000') {
+					browserHistory.push('/result')
+				} else {
+					browserHistory.push('/test-paper')
+				}
 		  }
 		});
 	}
