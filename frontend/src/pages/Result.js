@@ -70,8 +70,12 @@ class Result extends Component {
   _handleQuery(){
     fetch('http://1bf8acfd.ngrok.io/api/query/' + this.state.userId)
     .then((response)=>response.json())
-    .then((score) => {
-      this.setState({dataSource: [Object.assign(score,{key:score.userId})]});
+      .then((score) => {
+        if (score.score !== null) {
+          this.setState({dataSource: [Object.assign(score,{key:score.userId})]});
+        } else {
+          this.setState({ dataSource: [] });
+        }
       }).catch((err) => {
       console.error(err);
       console.log(err.response);
