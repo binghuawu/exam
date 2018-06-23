@@ -1,4 +1,4 @@
-package hello;
+package com.thoughtworks.exam;
 
 import java.util.Arrays;
 
