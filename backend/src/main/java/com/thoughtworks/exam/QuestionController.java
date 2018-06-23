@@ -14,5 +14,4 @@ public class QuestionController {
     public List<Question> fetchQuestions() {
         return Lists.newArrayList();
     }
-
 }
