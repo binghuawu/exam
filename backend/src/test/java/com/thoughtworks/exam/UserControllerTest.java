@@ -1,6 +1,7 @@
 package com.thoughtworks.exam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -27,13 +28,16 @@ public class UserControllerTest {
     public void should_return_user_score_when_submit_answer_by_user() throws Exception {
         UserSubmitAnswer userSubmitAnswer = new UserSubmitAnswer();
         userSubmitAnswer.setUserId("0001");
+        userSubmitAnswer.setChoices(Lists.newArrayList(new UserAnswer("001", "D"),
+                new UserAnswer("002", "D")));
         ObjectMapper objectMapper = new ObjectMapper();
 
         mvc.perform(post("/api/submit").contentType(APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(userSubmitAnswer)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("userId", CoreMatchers.is("0001")));
+                .andExpect(jsonPath("userId", CoreMatchers.is("0001")))
+                .andExpect(jsonPath("score", CoreMatchers.is(20)));
     }
 
     @Test
