@@ -9,16 +9,13 @@ function requestApi(config) {
         url: config.url,
         method: 'get',
         params: config.data,
-        timeout: 1000
+        timeout: 5000
     };
 
     if (config.method === 'post') {
         defaultConfig.method = 'post';
         defaultConfig.params = {};
         defaultConfig.data = config.data;
-        defaultConfig.headers = {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        };
     }
 
     return new Promise((resolve, reject) => {

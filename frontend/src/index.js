@@ -27,7 +27,7 @@ function render(onRender) {
             <Route path="/" component={ Login } />
             <Route path="test-paper" component={ TestPaper } />
             <Route path="result" component={ Result } />
-            <Route path="score" component={ Score } />
+            <Route path="score/:num" component={ Score } />
             <Route path="*" component={ NotFound } />
           </Router>
       </AppContainer>,
