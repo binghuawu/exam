@@ -1,9 +1,8 @@
 import axios from 'axios';
 
 function requestApi(config) {
-    // http://1bf8acfd.ngrok.io/api/queryAll
     // const baseURL = 'http://rap2api.taobao.org/app/mock/17913/api/';
-    const baseURL = 'http://1bf8acfd.ngrok.io/api/';
+    const baseURL = 'http://a0c4a00a.ngrok.io/api/';
     const defaultConfig = {
         baseURL,
         url: config.url,
