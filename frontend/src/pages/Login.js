@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
-import { Layout, Form, Icon, Input, Button, Checkbox } from 'antd';
-const { Header, Footer, Sider, Content } = Layout;
+import { Layout, Form, Icon, Input, Button } from 'antd';
+const { Header, Content } = Layout;
 import '../static/css/main.scss';
 import '../static/css/login.scss';
 

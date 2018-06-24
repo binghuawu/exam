@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Table, Icon, Divider } from 'antd';
+import { Layout } from 'antd';
 import '../static/css/score.scss';
 
 const { Header, Content } = Layout;
