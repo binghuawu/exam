@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 @RestController
 @CrossOrigin(value = "*")
@@ -25,9 +26,8 @@ public class UserController {
         put("010", "D");
     }};
 
-
-    private static List<UserScore> userScoreList = new ArrayList<>();
-
+    private static Map<String, UserScore> userScoreMap = new TreeMap<>();
+    
     @CrossOrigin(value = "*")
     @PostMapping(value = "api/submit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserScore submit(@RequestBody UserSubmitAnswer userSubmitAnswer) {
@@ -44,27 +44,26 @@ public class UserController {
         UserScore userScore = new UserScore();
         userScore.setUserId(userSubmitAnswer.getUserId());
         userScore.setScore(new BigDecimal(score));
-        userScoreList.add(userScore);
+        userScoreMap.put(userScore.getUserId(), userScore);
         return userScore;
 
     }
 
     @GetMapping(value = "api/queryAll", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserScore> queryAll() {
-        return userScoreList;
+        return new ArrayList<UserScore>(userScoreMap.values());
     }
 
     @GetMapping(value = "api/query/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserScore query(@PathVariable String id) {
         UserScore userScore;
-        for (int i = 0; i < userScoreList.size(); i++) {
-            userScore = userScoreList.get(i);
-            if (userScore != null && userScore.getUserId().equals(id)) {
-                return userScore;
-            }
+        System.out.println(id);
+        if (userScoreMap.get(id) != null) {
+            userScore = userScoreMap.get(id);
+        } else {
+            userScore = new UserScore();
+            userScore.setUserId(id);
         }
-        UserScore empty = new UserScore();
-        empty.setUserId(id);
-        return empty;
+        return userScore;
     }
 }
