@@ -56,14 +56,15 @@ public class UserController {
 
     @GetMapping(value = "api/query/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserScore query(@PathVariable String id) {
-        UserScore userScore = new UserScore();
+        UserScore userScore;
         for (int i = 0; i < userScoreList.size(); i++) {
             userScore = userScoreList.get(i);
             if (userScore != null && userScore.getUserId().equals(id)) {
                 return userScore;
             }
         }
-        userScore.setUserId(id);
-        return userScore;
+        UserScore empty = new UserScore();
+        empty.setUserId(id);
+        return empty;
     }
 }
