@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Layout, Input, Button, Table } from 'antd';
+import requestApi from '../../api/result';
 
 import '../static/css/result.scss';
 
@@ -31,14 +32,14 @@ class Result extends Component {
   }
 
   componentDidMount() {
-    fetch('http://1bf8acfd.ngrok.io/api/queryAll')
-    .then((response)=>response.json())
-      .then((scores) => {
-      this.setState({dataSource: scores.map((score)=>Object.assign(score,{key:score.userId}))});
-    }).catch((err) => {
-      console.error(err);
-      console.log(err.response);
-      console.log(err.message);
+    requestApi.queryAll().
+      then((scores) => {
+        this.setState({dataSource: scores.map((score)=>Object.assign(score,{key:score.userId}))});
+      }).
+      catch((err) => {
+        console.error(err);
+        console.log(err.response);
+        console.log(err.message);
     })
   }
 
@@ -67,19 +68,23 @@ class Result extends Component {
     this.setState({userId: e.target.value})
   }
 
-  _handleQuery(){
-    fetch('http://1bf8acfd.ngrok.io/api/query/' + this.state.userId)
-    .then((response)=>response.json())
-      .then((score) => {
+  _handleQuery() {
+    console.log(requestApi);
+    console.log(this.state.userId);
+    
+    requestApi.query(this.state.userId).
+      then((score) => {
+        console.log(score);
         if (score.score !== null) {
           this.setState({dataSource: [Object.assign(score,{key:score.userId})]});
         } else {
           this.setState({ dataSource: [] });
         }
-      }).catch((err) => {
-      console.error(err);
-      console.log(err.response);
-      console.log(err.message);
+      }).
+      catch((err) => {
+        console.error(err);
+        console.log(err.response);
+        console.log(err.message);
     })
   }
 }
