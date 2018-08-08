@@ -48,7 +48,7 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("com.google.guava:guava:25.1-jre")
-    compileOnly('org.projectlombok:lombok')
+    compile('org.projectlombok:lombok')
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
